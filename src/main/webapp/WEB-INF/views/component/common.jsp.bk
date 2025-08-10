@@ -1,0 +1,44 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<c:set var="_csrf" value="${_csrf}"/>
+
+<!-- 共通CSSのインポート -->
+<link rel="stylesheet" href="<c:url value='/static/bootstrap/css/bootstrap.css' />"/>
+
+<!-- 共通jQuery / Bootstrapのインポート -->
+<script src="<c:url value='/static/js/jquery-3.7.1.min.js' />"></script>
+<script src="<c:url value='/static/bootstrap/js/bootstrap.bundle.js' />"></script>
+
+<!-- JSグローバル変数に埋め込み -->
+<script type="text/javascript">
+    window.appContext = {
+        contextPath: '${contextPath}',
+        csrfHeader: '${_csrf.headerName}',
+        csrfToken: '${_csrf.token}'
+    };
+</script>
+
+<!-- 左ナビにて画面遷移時のAjax読み込み -->
+<script type="text/javascript">
+    $(function () {
+        $('.nav-btn').click(function () {
+            const url = $(this).data('url');
+            if (!url) return;
+            $.ajax({
+                url: url,
+                type: 'GET',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(csrfHeader, csrfToken);
+                },
+                success: function (data) {
+                    $('#mainContent').html(data);
+                },
+                error: function () {
+                    alert('コンテンツの読み込みに失敗しました。');
+                }
+            });
+        });
+    });
+</script>

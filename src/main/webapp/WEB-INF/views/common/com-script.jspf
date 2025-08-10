@@ -1,0 +1,13 @@
+<!-- 共通BootstrapとjQueryの読込 -->
+<script src="<c:url value='/static/js/jquery-3.7.1.min.js' />"></script>
+<script src="<c:url value='/static/bootstrap/js/bootstrap.bundle.js' />"></script>
+
+<!-- CSRFトークンをJavaScriptへ -->
+<script>
+    const csrfToken = '${_csrf.token}';
+    const csrfHeader = '${_csrf.headerName}';
+    const contextPath = '${pageContext.request.contextPath}';
+</script>
+
+<!-- 画面遷移用 -->
+<script src="<c:url value='/static/js/com-ajax.js' />"></script>

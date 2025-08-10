@@ -1,0 +1,93 @@
+// メイン表示領域ID
+const MAIN_AREA_ID = "main-content";
+
+/**
+ * 右クリックを禁止
+ */
+$(document).on("contextmenu", function (e) {
+    return false;
+});
+
+/**
+ * Alt+←、Alt+→、BrowserBack/Forward、F5、Ctrl+R を禁止
+ */
+window.addEventListener("keydown", function (e) {
+    const key = e.key;
+    if (
+        (e.altKey && (key === "ArrowLeft" || key === "ArrowRight")) || // Alt+←／→
+        (key === "Backspace" && !$(e.target).is("input, textarea")) ||       // Backspace outside input
+        key === "BrowserBack" || key === "BrowserForward" ||           // 専用キー
+        key === "F5" ||                                                // F5
+        (e.ctrlKey && key === "r")                                     // Ctrl+R
+    ) {
+        e.preventDefault();
+        alert("該当操作は無効です。");
+    }
+});
+
+// // ページリロード禁止（F5対策の補完）
+// window.onbeforeunload = function () {
+//     // ページ離脱を警告するかどうか
+//     if (!location.pathname.endsWith("/login") && !location.pathname.endsWith("/logout")) {
+//         return "ページをリロードしないでください。";
+//     }
+// };
+
+/**
+ * ローディングスピナー表示
+ */
+function showLoading() {
+    $(MAIN_AREA_ID).html(
+        '<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">読込中...</span></div></div>'
+    );
+}
+
+// 履歴固定：現在のページを履歴に登録し続ける（戻れないようにする）
+// window.addEventListener("load", function () {
+//     history.pushState(null, "", window.location.href);
+// });
+
+// ナビボタンクリック時にiframe切り替え＆URL変更
+// function loadPage(path) {
+//     console.log("path", path);
+//     if (!path.endsWith("/logout") && !path.endsWith("/index")) {
+//         document.getElementById(MAIN_AREA_ID).src = path;
+//     }
+//     history.replaceState(null, "", path);
+// }
+
+function loadPage(url, push = true) {
+    console.log("loadPage URL=", url);
+    fetch(url, {
+        headers: {csrfHeader: csrfToken}
+    }).then(resp => {
+        console.log("response=", resp);
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        return resp.text();
+    }).then(html => {
+        document.getElementById(MAIN_AREA_ID).innerHTML = html;
+        if (push) history.pushState(null, null, url);
+    }).catch(err => {
+        console.error("画面読み込みエラー:", err);
+    });
+}
+
+// 戻る／進むボタンにも対応
+window.addEventListener("popstate", function () {
+    const iframe = document.getElementById(MAIN_AREA_ID);
+    if (iframe) {
+        iframe.src = location.pathname;
+    }
+});
+
+// 初回表示時、URLに合わせてiframeを初期化
+// window.addEventListener("DOMContentLoaded", function () {
+//     const iframe = document.getElementById(MAIN_AREA_ID);
+//     if (iframe) {
+//         const path = location.pathname;
+//         console.log("location.pathname=", path);
+//         if (!path.endsWith("/index") && !path.endsWith("/")) {
+//             iframe.src = path;
+//         }
+//     }
+// });
