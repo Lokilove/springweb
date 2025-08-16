@@ -24,11 +24,11 @@ public class SystemNoticeService {
         systemNoticeBean.setReadFlag(0);
         systemNoticeList.add(systemNoticeBean);
 
-        systemNoticeBean = new SystemNoticeBean();
-        systemNoticeBean.setId(2);
-        systemNoticeBean.setTitle("【重要】メールサービス不安定のお知らせ！");
-        systemNoticeBean.setReadFlag(1);
-        systemNoticeList.add(systemNoticeBean);
+        SystemNoticeBean systemNoticeBean2 = new SystemNoticeBean();
+        systemNoticeBean2.setId(2);
+        systemNoticeBean2.setTitle("【重要】メールサービス不安定のお知らせ！");
+        systemNoticeBean2.setReadFlag(1);
+        systemNoticeList.add(systemNoticeBean2);
 
         return systemNoticeList;
     }

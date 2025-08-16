@@ -56,4 +56,9 @@ public class UserFormBean {
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
+
+    @Override
+    public String toString() {
+        return "UserFormBean{" + "userId='" + userId + '\'' + ", username='" + username + '\'' + ", email='" + email + '\'' + ", nowPassword='" + nowPassword + '\'' + ", newPassword='" + newPassword + '\'' + ", confirmPassword='" + confirmPassword + '\'' + '}';
+    }
 }
