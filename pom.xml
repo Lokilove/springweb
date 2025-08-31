@@ -14,6 +14,9 @@
         <log4j.version>2.0.17</log4j.version>
         <logback.version>1.5.18</logback.version>
         <junit.test.version>3.8.1</junit.test.version>
+        <h2.database.version>2.3.232</h2.database.version>
+        <mybatis-spring.version>2.1.2</mybatis-spring.version>
+        <mybatis.version>3.5.19</mybatis.version>
     </properties>
 
     <dependencies>
@@ -77,6 +80,37 @@
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
         </dependency>
+        <!-- h2 database -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.database.version}</version>
+<!--            <scope>test</scope>-->
+        </dependency>
+        <!-- mybatis-spring -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>${mybatis-spring.version}</version>
+        </dependency>
+        <!-- mybatis -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatis.version}</version>
+        </dependency>
+        <!-- mybatis-generator-core -->
+        <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-maven-plugin</artifactId>
+            <version>1.4.2</version>
+        </dependency>
+        <!-- mysql-connector-j -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>9.4.0</version>
+        </dependency>
         <!-- junit -->
         <dependency>
             <groupId>junit</groupId>
@@ -88,5 +122,15 @@
 
     <build>
         <finalName>springweb</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>11</source>
+                    <target>11</target>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 </project>

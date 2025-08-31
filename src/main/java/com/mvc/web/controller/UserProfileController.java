@@ -24,6 +24,12 @@ public class UserProfileController {
         this.userService = userService;
     }
 
+    /**
+     * 個人情報編集
+     * @param model Model
+     * @param principal セキュリティー規則
+     * @return 表示するJSP
+     */
     @RequestMapping("/editProfile")
     public String showEditProfile(Model model, Principal principal) {
         // principalからユーザー情報取得、userFormにセット
@@ -32,6 +38,12 @@ public class UserProfileController {
         return "user/editProfile"; // 部分JSPだけ返す
     }
 
+    /**
+     * 個人情報更新処理
+     * @param userFormBean 更新後個人情報Bean
+     * @param model Model
+     * @return 更新結果
+     */
     @RequestMapping("/updateProfile")
     public String updateProfile(@ModelAttribute UserFormBean userFormBean, Model model) {
         boolean success = userService.updateUser(userFormBean);

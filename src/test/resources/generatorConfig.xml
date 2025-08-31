@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="MyContext" targetRuntime="MyBatis3">
+
+        <!-- コメントジェネレーターに Custom を指定 -->
+        <commentGenerator type="com.mvc.web.CustomCommentGenerator">
+            <property name="suppressAllComments" value="false"/>
+            <property name="addRemarkComments" value="true"/>
+        </commentGenerator>
+
+        <!-- MySQL 接続設定：useInformationSchema=true が重要 -->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://192.168.0.6:3306/JAVASTUDY?useInformationSchema=TRUE"
+                        userId="javastudy"
+                        password="javaStudy@2024"/>
+
+        <!-- Java Model 出力先 -->
+        <javaModelGenerator targetPackage="com.mvc.web.bean.entity"
+                            targetProject="src/main/java"/>
+
+        <!-- Mapper XML 出力先 -->
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject="src/main/resources/mybatis"/>
+
+        <!-- Mapper インタフェース出力先 -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.mvc.web.mapper"
+                             targetProject="src/main/java"/>
+
+        <!-- 生成対象テーブル -->
+        <!-- domainObjectName は、生成する Java のモデルクラス名（エンティティ名）を指定する属性-->
+        <table tableName="NTC_MST"/>
+        <table tableName="NTC_DTL"/>
+        <table tableName="USR_NTC"/>
+        <!--        <table tableName="NTC_MST" domainObjectName="NtcMst" enableCountByExample="true"-->
+        <!--               enableUpdateByExample="true" enableDeleteByExample="true"-->
+        <!--               enableSelectByExample="true" selectByExampleQueryId="true"/>-->
+        <!--        <table tableName="NTC_DTL" domainObjectName="NtcDtl" enableCountByExample="true"-->
+        <!--               enableUpdateByExample="true" enableDeleteByExample="true"-->
+        <!--               enableSelectByExample="true" selectByExampleQueryId="true"/>-->
+        <!--        <table tableName="USR_NTC" domainObjectName="UsrNtc" enableCountByExample="true"-->
+        <!--               enableUpdateByExample="true" enableDeleteByExample="true"-->
+        <!--               enableSelectByExample="true" selectByExampleQueryId="true"/>-->
+    </context>
+</generatorConfiguration>
